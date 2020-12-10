@@ -40,10 +40,12 @@ apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
 apply plugin: 'com.kezong.fat-aar'
 
-def buildGutenbergMobileJSBundle =
-        System.getenv('SUPPRESS_GUTENBERG_MOBILE_JS_BUNDLE_BUILD').asBoolean()
-        ? false : (rootProject.ext.has("buildGutenbergMobileJSBundle")
-                && rootProject.ext.buildGutenbergMobileJSBundle)
+//def buildGutenbergMobileJSBundle =
+//        System.getenv('SUPPRESS_GUTENBERG_MOBILE_JS_BUNDLE_BUILD').asBoolean()
+//        ? false : (rootProject.ext.has("buildGutenbergMobileJSBundle")
+//                && rootProject.ext.buildGutenbergMobileJSBundle)
+def buildGutenbergMobileJSBundle = true
+
 
 def tempFolder = "${System.getenv('TMPDIR')}/jsbundle/${System.getenv('VERSION')}"
 def nodeFolder = file("${tempFolder}/nodejs")
@@ -197,8 +199,9 @@ dependencies {
 }
 
 boolean isBundleUpToDate() {
-    // return project.hasProperty('isBundleUpToDate') && isBundleUpToDate
-    return true
+//     return project.hasProperty('isBundleUpToDate') && isBundleUpToDate
+//    return true
+    return false
 }
 
 if (buildGutenbergMobileJSBundle) {
