@@ -1,8 +1,10 @@
 buildscript {
-    def buildGutenbergMobileJSBundle =
-            System.getenv('SUPPRESS_GUTENBERG_MOBILE_JS_BUNDLE_BUILD').asBoolean()
-            ? false : (rootProject.ext.has("buildGutenbergMobileJSBundle")
-                    && rootProject.ext.buildGutenbergMobileJSBundle)
+    // def buildGutenbergMobileJSBundle =
+    //         System.getenv('SUPPRESS_GUTENBERG_MOBILE_JS_BUNDLE_BUILD').asBoolean()
+    //         ? false : (rootProject.ext.has("buildGutenbergMobileJSBundle")
+    //                 && rootProject.ext.buildGutenbergMobileJSBundle)
+    // DEBUG, always set this to true
+    def buildGutenbergMobileJSBundle = true
 
     ext.kotlinVersion = '1.3.61'
 
@@ -22,6 +24,8 @@ buildscript {
         classpath 'com.android.tools.build:gradle:3.4.2'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.5'
+        // Allows embedding other dependencies into the AAR for this one
+        classpath 'com.kezong:fat-aar:1.2.20'
 
         if (buildGutenbergMobileJSBundle) {
             classpath 'com.github.node-gradle:gradle-node-plugin:3.0.0-rc2'
@@ -34,6 +38,7 @@ apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'kotlin-android'
 apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
+apply plugin: 'com.kezong.fat-aar'
 
 def buildGutenbergMobileJSBundle =
         System.getenv('SUPPRESS_GUTENBERG_MOBILE_JS_BUNDLE_BUILD').asBoolean()
