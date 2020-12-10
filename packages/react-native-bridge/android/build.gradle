@@ -197,7 +197,8 @@ dependencies {
 }
 
 boolean isBundleUpToDate() {
-    return project.hasProperty('isBundleUpToDate') && isBundleUpToDate
+    // return project.hasProperty('isBundleUpToDate') && isBundleUpToDate
+    return true
 }
 
 if (buildGutenbergMobileJSBundle) {
