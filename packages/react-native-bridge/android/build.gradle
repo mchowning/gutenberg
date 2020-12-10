@@ -345,6 +345,12 @@ If they are changed, the isBundleUpToDate flag is switched to false. That flag i
     }
 }
 
+// Allows to override the artifact version by passing a -PbintrayVersion
+// parameter when calling Gradle
+def getBintrayVersion() {
+  return project.properties['bintrayVersion'] ?: android.defaultConfig.versionName
+}
+
 bintray {
     user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
     key = project.hasProperty('bintrayKey') ? project.property('bintrayKey') : System.getenv('BINTRAY_KEY')
@@ -359,8 +365,7 @@ bintray {
         // FIXME: Once this works properly poit to the original gutenberg (or gutenberg-mobile) repo. See also: https://github.com/oguzkocer/gutenberg/commit/0ca71b1abe3ea22b77abb3f390534e66e39161d5#diff-320e7dacc9e9a83ac8128d299319f82cf6dfa2609e0ebbc043d13de33ea92773R350-R353
         vcsUrl = 'https://github.com/wordpress-mobile/gutenberg-mobile.git'
         version {
-            // TODO: We'll likely want to use the same approach as WordPress-Utils-Android. See https://github.com/wordpress-mobile/WordPress-Utils-Android/blob/a15474122f61bce40117ad1fc9cd90458232b75a/WordPressUtils/build.gradle#L91-L95
-            name = android.defaultConfig.versionName
+            name = getBintrayVersion()
             released  = new Date()
         }
     }
@@ -374,7 +379,7 @@ project.afterEvaluate {
 
                 groupId 'com.github.wordpress-mobile.gutenberg-mobile'
                 artifactId 'react-native-gutenberg-bridge'
-                version android.defaultConfig.versionName
+                version getBintrayVersion()
 
                 addDependenciesToPom(pom)
             }
