@@ -41,10 +41,16 @@ apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
 apply plugin: 'com.kezong.fat-aar'
 
-def buildGutenbergMobileJSBundle =
-        System.getenv('SUPPRESS_GUTENBERG_MOBILE_JS_BUNDLE_BUILD').asBoolean()
-        ? false : (rootProject.ext.has("buildGutenbergMobileJSBundle")
-                && rootProject.ext.buildGutenbergMobileJSBundle)
+// Note that there is an identical definition of this in the buildscript at the
+// start of this file. Should we DRY them?
+//
+// def buildGutenbergMobileJSBundle =
+//         System.getenv('SUPPRESS_GUTENBERG_MOBILE_JS_BUNDLE_BUILD').asBoolean()
+//         ? false : (rootProject.ext.has("buildGutenbergMobileJSBundle")
+//                 && rootProject.ext.buildGutenbergMobileJSBundle)
+//
+// DEBUG, always set this to true to force building the bundle every time
+def buildGutenbergMobileJSBundle = true
 
 def tempFolder = "${System.getenv('TMPDIR')}/jsbundle/${System.getenv('VERSION')}"
 def nodeFolder = file("${tempFolder}/nodejs")
